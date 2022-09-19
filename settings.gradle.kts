@@ -1,1 +1,1 @@
-rootProject.name = "com.cookup.cookup-server"
+rootProject.name = "cooksup-server"
