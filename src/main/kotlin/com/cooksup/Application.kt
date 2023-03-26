@@ -1,9 +1,16 @@
 package com.cooksup
 
-import com.cooksup.model.recipes
-import io.ktor.server.engine.*
+import com.cooksup.database.entities.IngredientDB
+import com.cooksup.database.entities.RecipeDB
+import com.cooksup.database.initDB
+import com.cooksup.model.IngredientRepository
+import com.cooksup.model.RecipeFullRepository
+import com.cooksup.model.RecipesRepository
+import com.cooksup.plugins.configureRouting
+import com.cooksup.plugins.configureSerialization
 import io.ktor.server.cio.*
-import com.cooksup.plugins.*
+import io.ktor.server.engine.*
+import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
     checkData()
@@ -14,5 +21,29 @@ fun main() {
 }
 
 fun checkData() {
-    recipes
+    IngredientRepository.init()
+    RecipesRepository.init()
+    RecipeFullRepository.init()
+    initDB()
+    IngredientRepository.ingredients.forEach {
+        print(it.name + ", ")
+    }
+
+//    RecipeFullRepository.recipes.forEach {
+//        transaction {
+//            RecipeDB.new {
+//                name = it.name
+//                ingredients = it.ingredients.map { it.name }.toString()
+//            }
+//        }
+//    }
+//
+//    IngredientRepository.ingredients.forEach {
+//        transaction {
+//            IngredientDB.new {
+//                name = it.name.replace("%", "процент")
+//                color = it.color
+//            }
+//        }
+//    }
 }

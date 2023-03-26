@@ -3,4 +3,7 @@ package com.cooksup.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Ingredient(val name: String, val color: String = "")
+data class Step(
+    val text: String,
+    val pic: String
+)
