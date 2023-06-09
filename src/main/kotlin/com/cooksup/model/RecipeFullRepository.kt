@@ -33,7 +33,7 @@ object RecipeFullRepository {
             IngredientsDB.selectAll().limit(20, offset = 20L * page).map {
                 Ingredient(
                     it[IngredientsDB.name],
-                    it[IngredientsDB.color]
+                    it[IngredientsDB.group]
                 )
             }
         }

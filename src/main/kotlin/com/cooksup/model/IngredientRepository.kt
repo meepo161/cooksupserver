@@ -16,14 +16,14 @@ object IngredientRepository {
 
     fun init() {
         try {
-            ingredients.addAll(loadFromJson(Paths.get("ingredients.json")))
+            ingredients.addAll(loadFromJson(Paths.get("ingredients_group.json")))
         } catch (_: Exception) {
         }
     }
 
     fun save() {
         saveToJsonFile(
-            Paths.get("ingredients.json"),
+            Paths.get("ingredients_group.json"),
             ingredients
         )
     }
@@ -33,7 +33,7 @@ object IngredientRepository {
             IngredientsDB.selectAll().limit(20, offset = 20L * page).map {
                 Ingredient(
                     it[IngredientsDB.name],
-                    it[IngredientsDB.color]
+                    it[IngredientsDB.group]
                 )
             }
         }

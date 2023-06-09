@@ -25,24 +25,21 @@ fun checkData() {
     RecipesRepository.init()
     RecipeFullRepository.init()
     initDB()
-    IngredientRepository.ingredients.forEach {
-        print(it.name + ", ")
-    }
 
+//    IngredientRepository.ingredients.forEach {
+//        transaction {
+//            IngredientDB.new {
+//                name = it.name.replace("%", "процент")
+//                group = it.group
+//            }
+//        }
+//    }
+//
 //    RecipeFullRepository.recipes.forEach {
 //        transaction {
 //            RecipeDB.new {
 //                name = it.name
 //                ingredients = it.ingredients.map { it.name }.toString()
-//            }
-//        }
-//    }
-//
-//    IngredientRepository.ingredients.forEach {
-//        transaction {
-//            IngredientDB.new {
-//                name = it.name.replace("%", "процент")
-//                color = it.color
 //            }
 //        }
 //    }
