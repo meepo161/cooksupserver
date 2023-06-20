@@ -1,20 +1,15 @@
 package com.cooksup
 
-import com.cooksup.database.entities.IngredientDB
-import com.cooksup.database.entities.RecipeDB
-import com.cooksup.database.initDB
 import com.cooksup.model.IngredientRepository
 import com.cooksup.model.RecipeFullRepository
-import com.cooksup.model.RecipesRepository
 import com.cooksup.plugins.configureRouting
 import com.cooksup.plugins.configureSerialization
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
-import org.jetbrains.exposed.sql.transactions.transaction
 
-fun main() {
+fun main(args: Array<String>) {
     checkData()
-    embeddedServer(CIO, port = 8080, host = "0.0.0.0") {
+    embeddedServer(CIO, port = 80, host = "0.0.0.0") {
         configureSerialization()
         configureRouting()
     }.start(wait = true)
@@ -22,9 +17,9 @@ fun main() {
 
 fun checkData() {
     IngredientRepository.init()
-    RecipesRepository.init()
+//    RecipesRepository.init()
     RecipeFullRepository.init()
-    initDB()
+//    initDB()
 
 //    IngredientRepository.ingredients.forEach {
 //        transaction {
