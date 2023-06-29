@@ -5,15 +5,15 @@ import com.cooksup.utils.saveToJsonFile
 import java.nio.file.Paths
 
 object RecipeRepository {
-    val recipes1 = mutableListOf<RecipeFull>()
-    private val recipesFiltered = mutableSetOf<RecipeFull>()
-    private val recipesFilteredFromText = mutableListOf<RecipeFull>()
+    val recipes1 = mutableListOf<Recipe>()
+    private val recipesFiltered = mutableSetOf<Recipe>()
+    private val recipesFilteredFromText = mutableListOf<Recipe>()
 
-    fun add(recipe: RecipeFull) {
+    fun add(recipe: Recipe) {
         recipes1.add(recipe)
     }
 
-    private fun addFilteredFromText(recipeFiltered: RecipeFull) {
+    private fun addFilteredFromText(recipeFiltered: Recipe) {
         recipesFilteredFromText.add(recipeFiltered)
     }
 
@@ -27,7 +27,7 @@ object RecipeRepository {
         }
     }
 
-    fun initFilteredFromText(request: String): MutableList<RecipeFull> {
+    fun initFilteredFromText(request: String): MutableList<Recipe> {
         try {
             recipesFilteredFromText.clear()
             recipes1.filter { recipe ->
@@ -47,7 +47,7 @@ object RecipeRepository {
         return recipesFilteredFromText
     }
 
-    fun initFiltered(list: List<Ingredient>): MutableList<RecipeFull> {
+    fun initFiltered(list: List<Ingredient>): MutableList<Recipe> {
         println(list)
         try {
             recipesFiltered.clear()

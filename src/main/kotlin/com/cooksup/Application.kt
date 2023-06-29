@@ -6,6 +6,10 @@ import com.cooksup.plugins.configureRouting
 import com.cooksup.plugins.configureSerialization
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import org.litote.kmongo.Id
+import org.litote.kmongo.KMongo
+import org.litote.kmongo.getCollection
+
 
 fun main(args: Array<String>) {
     checkData()
@@ -18,26 +22,4 @@ fun main(args: Array<String>) {
 fun checkData() {
     IngredientRepository.init()
     RecipeRepository.init()
-
-
-//    RecipesRepository.init()
-//    initDB()
-
-//    IngredientRepository.ingredients.forEach {
-//        transaction {
-//            IngredientDB.new {
-//                name = it.name.replace("%", "процент")
-//                group = it.group
-//            }
-//        }
-//    }
-//
-//    RecipeFullRepository.recipes.forEach {
-//        transaction {
-//            RecipeDB.new {
-//                name = it.name
-//                ingredients = it.ingredients.map { it.name }.toString()
-//            }
-//        }
-//    }
 }
