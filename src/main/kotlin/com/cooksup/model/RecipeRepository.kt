@@ -4,50 +4,41 @@ import com.cooksup.utils.loadFromJson
 import com.cooksup.utils.saveToJsonFile
 import java.nio.file.Paths
 
-object RecipeFullRepository {
+object RecipeRepository {
     val recipes1 = mutableListOf<RecipeFull>()
-
-    //    val recipes2 = mutableListOf<RecipeFull>()
-//    val recipes3 = mutableListOf<RecipeFull>()
-    val recipesFiltered = mutableSetOf<RecipeFull>()
-    val recipesFilteredFromText = mutableListOf<RecipeFull>()
+    private val recipesFiltered = mutableSetOf<RecipeFull>()
+    private val recipesFilteredFromText = mutableListOf<RecipeFull>()
 
     fun add(recipe: RecipeFull) {
         recipes1.add(recipe)
     }
 
-    fun addFilteredFromText(recipeFiltered: RecipeFull) {
+    private fun addFilteredFromText(recipeFiltered: RecipeFull) {
         recipesFilteredFromText.add(recipeFiltered)
     }
 
     fun init() {
         try {
             recipes1.addAll(loadFromJson(Paths.get("recipe_full_0_30.json")))
-//            recipes2.addAll(loadFromJson(Paths.get("recipe_full_30_60.json")))
-//            recipes3.addAll(loadFromJson(Paths.get("recipe_full_60_90.json")))
+            recipes1.addAll(loadFromJson(Paths.get("recipe_full_30_60.json")))
+            recipes1.addAll(loadFromJson(Paths.get("recipe_full_60_90.json")))
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-//    fun getRecipesByPage(page: Int): List<Ingredient> {
-//        return transaction {
-//            IngredientsDB.selectAll().limit(20, offset = 20L * page).map {
-//                Ingredient(
-//                    it[IngredientsDB.name],
-//                    it[IngredientsDB.group]
-//                )
-//            }
-//        }
-//    }
-
-    fun initFilteredFromText(name: String): MutableList<RecipeFull> {
+    fun initFilteredFromText(request: String): MutableList<RecipeFull> {
         try {
             recipesFilteredFromText.clear()
             recipes1.filter { recipe ->
-                recipe.name.lowercase().contains(name.lowercase())
+                val nameRequest = request.lowercase().split(' ').toSet()
+                val nameRecipe = recipe.name.lowercase().split(' ').toSet()
+                if (nameRequest.size == 1) {
+                    recipe.name.trim().lowercase().contains(request.removeRange(3, request.length).trim().lowercase())
+                } else {
+                    (nameRequest subtract nameRecipe).isEmpty()
+                }
             }.forEach {
-                println(it)
                 addFilteredFromText(it)
             }
         } catch (e: Exception) {
@@ -68,6 +59,7 @@ object RecipeFullRepository {
                 }.forEach {
                     if (recipesCount++ < 400) {
                         recipesFiltered.add(it)
+                        println(it.name)
                     }
                 }
             }
@@ -91,11 +83,10 @@ object RecipeFullRepository {
         )
     }
 
-    fun generateVariations(ingredients: List<Ingredient>): List<List<Ingredient>> {
+    private fun generateVariations(ingredients: List<Ingredient>): List<List<Ingredient>> {
         val variations = mutableListOf<List<Ingredient>>()
-
         if (ingredients.isNotEmpty()) {
-            for (i in 0 until ingredients.size) {
+            for (i in ingredients.indices) {
                 val variation = mutableListOf<Ingredient>()
                 for (j in i until (i + ingredients.size)) {
                     val index = j % ingredients.size

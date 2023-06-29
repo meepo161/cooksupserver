@@ -1,7 +1,7 @@
 package com.cooksup
 
 import com.cooksup.model.IngredientRepository
-import com.cooksup.model.RecipeFullRepository
+import com.cooksup.model.RecipeRepository
 import com.cooksup.plugins.configureRouting
 import com.cooksup.plugins.configureSerialization
 import io.ktor.server.cio.*
@@ -17,8 +17,10 @@ fun main(args: Array<String>) {
 
 fun checkData() {
     IngredientRepository.init()
+    RecipeRepository.init()
+
+
 //    RecipesRepository.init()
-    RecipeFullRepository.init()
 //    initDB()
 
 //    IngredientRepository.ingredients.forEach {

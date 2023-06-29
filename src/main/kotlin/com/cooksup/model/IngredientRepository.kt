@@ -1,6 +1,5 @@
 package com.cooksup.model
 
-//import com.cooksup.database.entities.IngredientsDB
 import com.cooksup.utils.loadFromJson
 import com.cooksup.utils.saveToJsonFile
 import java.nio.file.Paths
