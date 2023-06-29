@@ -32,6 +32,8 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("org.litote.kmongo:kmongo:$kmongo_version")
+    implementation("com.google.firebase:firebase-admin:9.0.0")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
 }
 
 tasks.withType<Jar> {

@@ -19,9 +19,7 @@ object RecipeRepository {
 
     fun init() {
         try {
-            recipes1.addAll(loadFromJson(Paths.get("recipe_full_0_30.json")))
-            recipes1.addAll(loadFromJson(Paths.get("recipe_full_30_60.json")))
-            recipes1.addAll(loadFromJson(Paths.get("recipe_full_60_90.json")))
+            recipes1.addAll(loadFromJson(Paths.get("recipe_full_new.json")))
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -47,27 +45,27 @@ object RecipeRepository {
         return recipesFilteredFromText
     }
 
-    fun initFiltered(list: List<Ingredient>): MutableList<Recipe> {
-        println(list)
-        try {
-            recipesFiltered.clear()
-            val variations = generateVariations(list)
-            var recipesCount = 0
-            variations.forEach { variation ->
-                recipes1.filter { recipe ->
-                    recipe.ingredients.map(Ingredient::name).containsAll(variation.map { it.name })
-                }.forEach {
-                    if (recipesCount++ < 400) {
-                        recipesFiltered.add(it)
-                        println(it.name)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return recipesFiltered.toMutableList()
-    }
+//    fun initFiltered(list: List<Ingredient>): MutableList<Recipe> {
+//        println(list)
+//        try {
+//            recipesFiltered.clear()
+//            val variations = generateVariations(list)
+//            var recipesCount = 0
+//            variations.forEach { variation ->
+//                recipes1.filter { recipe ->
+//                    recipe.ingredients.map(Ingredient::name).containsAll(variation.map { it.name })
+//                }.forEach {
+//                    if (recipesCount++ < 400) {
+//                        recipesFiltered.add(it)
+//                        println(it.name)
+//                    }
+//                }
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        return recipesFiltered.toMutableList()
+//    }
 
     fun save() {
         saveToJsonFile(
@@ -81,21 +79,5 @@ object RecipeRepository {
             Paths.get("recipe_filtered.json"),
             recipesFiltered
         )
-    }
-
-    private fun generateVariations(ingredients: List<Ingredient>): List<List<Ingredient>> {
-        val variations = mutableListOf<List<Ingredient>>()
-        if (ingredients.isNotEmpty()) {
-            for (i in ingredients.indices) {
-                val variation = mutableListOf<Ingredient>()
-                for (j in i until (i + ingredients.size)) {
-                    val index = j % ingredients.size
-                    variation.add(ingredients[index])
-                    variations.add(variation.toList())
-                }
-            }
-        }
-
-        return variations.sortedBy { it.size }.reversed()
     }
 }
