@@ -1,11 +1,11 @@
 package com.cooksup.model
 
+import com.cooksup.Singleton.client
 import org.bson.types.ObjectId
 import org.litote.kmongo.*
 import org.litote.kmongo.id.toId
 
 class PersonService {
-    private val client = KMongo.createClient()
     private val database = client.getDatabase("person")
     private val personCollection = database.getCollection<Person>()
 

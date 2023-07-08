@@ -1,12 +1,12 @@
 package com.cooksup.model
 
+import com.cooksup.Singleton.client
 import com.mongodb.BasicDBObject
 import org.bson.types.ObjectId
 import org.litote.kmongo.*
 import org.litote.kmongo.id.toId
 
 class RecipeService {
-    val client = KMongo.createClient()
     val database = client.getDatabase("recipe")
     val recipeCollection = database.getCollection<RecipeDB>()
 

@@ -13,14 +13,14 @@ object IngredientRepository {
 
     fun init() {
         try {
-            ingredients.addAll(loadFromJson(Paths.get("ingredients_group.json")))
+            ingredients.addAll(loadFromJson(Paths.get("ingredients.json")))
         } catch (_: Exception) {
         }
     }
 
     fun save() {
         saveToJsonFile(
-            Paths.get("ingredients_group.json"),
+            Paths.get("ingredients.json"),
             ingredients
         )
     }
