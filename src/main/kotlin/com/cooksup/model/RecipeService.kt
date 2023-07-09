@@ -54,23 +54,24 @@ class RecipeService {
 //        return recipesFiltered.toMutableList()
 //    }
 
-    fun findByIngredient(ingredientsList: List<Ingredient>?): List<Recipe> {
-        val list = mutableListOf<Recipe>()
+    fun findByIngredient(ingredientsList: List<Ingredient>?, page: Ingredient?): List<Recipe> {
         try {
+            val list = mutableListOf<Recipe>()
             val variations = generateVariations(ingredientsList!!)
             variations.forEach { variation ->
-                list.addAll(recipeCollection.find(Recipe::ingredients all variation).limit(400).map { it.toJSON() })
+                list.addAll(recipeCollection.find(Recipe::ingredients all variation).limit(200).map { it.toJSON() })
             }
+            val recipesList = mutableListOf<Recipe>()
+            list.forEachIndexed { index, recipe ->
+                if (index >= page!!.name.toInt() * 20 - 19 && index <= page.name.toInt() * 20) {
+                    recipesList.add(recipe)
+                }
+            }
+            return recipesList
         } catch (e: Exception) {
             e.printStackTrace()
+            return listOf()
         }
-        val recipesList = mutableListOf<Recipe>()
-        list.forEachIndexed { index, recipe ->
-            if (index < 400) {
-                recipesList.add(recipe)
-            }
-        }
-        return recipesList
     }
 
 

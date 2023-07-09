@@ -7,7 +7,6 @@ fun Person.toDto(): PersonDto =
         id = this.id.toString(),
         name = this.name,
         email = this.email,
-        phone = this.phone,
         password = this.password
     )
 
@@ -15,7 +14,6 @@ fun PersonDto.toPerson(): Person =
     Person(
         name = this.name,
         email = this.email,
-        phone = this.phone,
         password = this.password
     )
 

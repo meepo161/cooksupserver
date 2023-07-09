@@ -9,7 +9,6 @@ data class PersonDto(
     val id: String? = null,
     val name: String,
     val email: String,
-    val phone: String,
     val password: String,
 )
 
@@ -18,6 +17,5 @@ data class Person(
     val id: Id<Person>? = null,
     val name: String,
     val email: String,
-    val phone: String,
     val password: String,
 )
