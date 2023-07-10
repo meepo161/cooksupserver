@@ -5,6 +5,7 @@ import com.mongodb.BasicDBObject
 import org.bson.types.ObjectId
 import org.litote.kmongo.*
 import org.litote.kmongo.id.toId
+import org.litote.kmongo.MongoOperator.`in`
 
 class RecipeService {
     val database = client.getDatabase("recipe")
@@ -54,20 +55,24 @@ class RecipeService {
 //        return recipesFiltered.toMutableList()
 //    }
 
-    fun findByIngredient(ingredientsList: List<Ingredient>?, page: Ingredient?): List<Recipe> {
+    fun findByIngredient(ingredientsList: List<Ingredient>?): List<Recipe> {
         try {
+            val count = 200
+            val time = System.currentTimeMillis()
             val list = mutableListOf<Recipe>()
             val variations = generateVariations(ingredientsList!!)
+
             variations.forEach { variation ->
-                list.addAll(recipeCollection.find(Recipe::ingredients all variation).limit(200).map { it.toJSON() })
-            }
-            val recipesList = mutableListOf<Recipe>()
-            list.forEachIndexed { index, recipe ->
-                if (index >= page!!.name.toInt() * 20 - 19 && index <= page.name.toInt() * 20) {
-                    recipesList.add(recipe)
+                if (list.size < count) {
+                    recipeCollection.aggregate<Recipe>(match(Recipe::ingredients all variation), limit(count))
+                        .map { it }.forEach {
+                            if (list.size < count) {
+                                list.add(it)
+                            }
+                        }
                 }
             }
-            return recipesList
+            return list
         } catch (e: Exception) {
             e.printStackTrace()
             return listOf()
