@@ -1,6 +1,6 @@
 package com.cooksup.model
 
-import com.cooksup.Singleton.client
+import com.cooksup.client
 import org.bson.types.ObjectId
 import org.litote.kmongo.*
 import org.litote.kmongo.id.toId

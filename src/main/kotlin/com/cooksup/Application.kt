@@ -3,12 +3,16 @@ package com.cooksup
 import com.cooksup.model.*
 import com.cooksup.plugins.configureRouting
 import com.cooksup.plugins.configureSerialization
+import com.mongodb.client.MongoClient
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import org.litote.kmongo.KMongo
 
-
+lateinit var client: MongoClient
 fun main(args: Array<String>) {
-    checkData()
+    client = KMongo.createClient()
+//    val client = KMongo.createClient("mongodb://avem:avem123avem456@localhost:27017")
+//    checkData()
     embeddedServer(CIO, port = 80, host = "0.0.0.0") {
         configureSerialization()
         configureRouting()

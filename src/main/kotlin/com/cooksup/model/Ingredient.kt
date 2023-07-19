@@ -6,6 +6,7 @@ import org.litote.kmongo.Id
 
 @Serializable
 data class Ingredient(
+    val id: String? = null,
     val name: String,
     val description: String = "",
     val pic: String = "",

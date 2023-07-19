@@ -1,6 +1,6 @@
 package com.cooksup.model
 
-import com.cooksup.Singleton.client
+import com.cooksup.client
 import org.bson.types.ObjectId
 import org.litote.kmongo.*
 import org.litote.kmongo.id.toId
@@ -13,6 +13,15 @@ class PersonService {
         personCollection.insertOne(person)
         return person.id
     }
+
+    fun updateById(id: String, request: String): Boolean =
+        findById(id)
+            ?.let { person ->
+                val newList = person.favourite.toMutableList()
+                newList.add(request)
+                val updateResult = personCollection.replaceOne(person.copy(favourite = newList))
+                updateResult.modifiedCount == 1L
+            } ?: false
 
     fun findAll(): List<Person> {
         return personCollection.find().toList()

@@ -1,19 +1,18 @@
 package com.cooksup.model
 
-import com.cooksup.Singleton.client
+import com.cooksup.client
 import com.mongodb.BasicDBObject
 import org.bson.types.ObjectId
 import org.litote.kmongo.*
 import org.litote.kmongo.id.toId
-import org.litote.kmongo.MongoOperator.`in`
 
 class RecipeService {
     val database = client.getDatabase("recipe")
     val recipeCollection = database.getCollection<RecipeDB>()
 
-    fun create(RecipeDB: RecipeDB): Id<RecipeDB>? {
-        recipeCollection.insertOne(RecipeDB)
-        return RecipeDB.id
+    fun create(recipeDB: RecipeDB): Id<RecipeDB>? {
+        recipeCollection.insertOne(recipeDB)
+        return recipeDB.id
     }
 
     fun findAll(): List<RecipeDB> {
@@ -64,7 +63,7 @@ class RecipeService {
 
             variations.forEach { variation ->
                 if (list.size < count) {
-                    recipeCollection.aggregate<Recipe>(match(Recipe::ingredients all variation), limit(count))
+                    recipeCollection.find(Recipe::ingredients all variation).limit(200).map { it.toJSON() }
                         .map { it }.forEach {
                             if (list.size < count) {
                                 list.add(it)
@@ -72,6 +71,7 @@ class RecipeService {
                         }
                 }
             }
+            println(list[0].id)
             return list
         } catch (e: Exception) {
             e.printStackTrace()

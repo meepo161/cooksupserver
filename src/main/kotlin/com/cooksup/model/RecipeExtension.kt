@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 fun RecipeDB.toJSON(): Recipe =
     Recipe(
+        id = this.id.toString(),
         name = name,
         description = description,
         pic = pic,
