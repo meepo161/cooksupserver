@@ -19,6 +19,14 @@ class RecipeService {
         return recipeCollection.find().toList()
     }
 
+    fun findAllWithIds(listIds: List<String>): List<Recipe> {
+        val listRecipes = mutableListOf<Recipe>()
+        listIds.forEach { id ->
+            recipeCollection.findOne(RecipeDB::id eq ObjectId(id).toId())?.let { listRecipes.add(it.toJSON()) }
+        }
+        return listRecipes.toList()
+    }
+
     fun findById(id: String): RecipeDB? {
         val bsonId: Id<RecipeDB> = ObjectId(id).toId()
         return recipeCollection.findOne(RecipeDB::id eq bsonId)

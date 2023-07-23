@@ -8,7 +8,7 @@ fun Person.toDto(): PersonDto =
         name = this.name,
         email = this.email,
         password = this.password,
-        favourite = this.favourite
+        favorite = this.favorite
     )
 
 fun PersonDto.toPerson(): Person =
@@ -16,7 +16,7 @@ fun PersonDto.toPerson(): Person =
         name = this.name,
         email = this.email,
         password = this.password,
-        favourite = this.favourite
+        favorite = this.favorite
     )
 
 @Serializable

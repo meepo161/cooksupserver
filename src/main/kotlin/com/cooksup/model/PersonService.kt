@@ -6,7 +6,7 @@ import org.litote.kmongo.*
 import org.litote.kmongo.id.toId
 
 class PersonService {
-    private val database = client.getDatabase("person")
+    val database = client.getDatabase("person")
     private val personCollection = database.getCollection<Person>()
 
     fun create(person: Person): Id<Person>? {
@@ -17,9 +17,13 @@ class PersonService {
     fun updateById(id: String, request: String): Boolean =
         findById(id)
             ?.let { person ->
-                val newList = person.favourite.toMutableList()
-                newList.add(request)
-                val updateResult = personCollection.replaceOne(person.copy(favourite = newList))
+                val newList = person.favorite.toMutableList()
+                if (newList.contains(request)) {
+                    newList.remove(request)
+                } else {
+                    newList.add(request)
+                }
+                val updateResult = personCollection.replaceOne(person.copy(favorite = newList))
                 updateResult.modifiedCount == 1L
             } ?: false
 
