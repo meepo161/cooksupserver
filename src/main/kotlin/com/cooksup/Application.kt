@@ -8,7 +8,7 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import org.litote.kmongo.KMongo
 
-var DEBUG = false
+var DEBUG = true
 
 lateinit var client: MongoClient
 fun main(args: Array<String>) {
@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
         checkData()
     }
 //    client = KMongo.createClient()
-        client = KMongo.createClient("mongodb://avem:avem123avem456@localhost:27017")
+    client = KMongo.createClient("mongodb://avem:avem123avem456@localhost:27017")
     embeddedServer(CIO, port = 80, host = "0.0.0.0") {
         configureSerialization()
         configureRouting()

@@ -13,7 +13,8 @@ fun IngredientDB.toJSON(): Ingredient =
         benefitAndHarm = this.benefitAndHarm,
         taste = this.taste,
         howTo = this.howTo,
-        howLong = this.howLong
+        howLong = this.howLong,
+        tags = this.tags
     )
 
 fun Ingredient.toDB(): IngredientDB =
@@ -26,7 +27,8 @@ fun Ingredient.toDB(): IngredientDB =
         benefitAndHarm = this.benefitAndHarm,
         taste = this.taste,
         howTo = this.howTo,
-        howLong = this.howLong
+        howLong = this.howLong,
+        tags = this.tags
     )
 
 @Serializable

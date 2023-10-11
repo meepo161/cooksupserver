@@ -15,7 +15,8 @@ data class Ingredient(
     val benefitAndHarm: String = "",
     val taste: String = "",
     val howTo: String = "",
-    val howLong: String = ""
+    val howLong: String = "",
+    val tags: List<String> = listOf()
 )
 
 data class IngredientDB(
@@ -29,5 +30,6 @@ data class IngredientDB(
     val benefitAndHarm: String = "",
     val taste: String = "",
     val howTo: String = "",
-    val howLong: String = ""
+    val howLong: String = "",
+    val tags: List<String> = listOf()
 )
